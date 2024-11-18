@@ -23,11 +23,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download Dockerfile
+      - name: Download env
         run: |
           curl -H "Authorization: token ${{secrets.PAT_TOKEN}}" -o .env.cicd https://raw.githubusercontent.com/lkduy2602/truyenthinh_configs/main/.env.cicd
 
-      - name: Load secrets
+      - name: Load env
         run: |
           cat .env.cicd >> $GITHUB_ENV
 
