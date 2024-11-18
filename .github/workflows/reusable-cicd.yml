@@ -62,7 +62,7 @@ jobs:
           username: ${{ env.SSH_USERNAME }}
           password: ${{ env.SSH_PASSWORD }}
           script: |
-            rm -rf infrastructure-configs
+            rm -rf truyenthinh_configs
             git clone https://${{secrets.PAT_TOKEN}}@github.com/lkduy2602/truyenthinh_configs.git
             cd truyenthinh_configs
             bash build-services.sh ${{ format('{0}:{1}', github.repository, inputs.environment) }}
