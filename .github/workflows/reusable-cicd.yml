@@ -54,19 +54,15 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-    #   - name: Deploy to server
-    #     uses: appleboy/ssh-action@v1.1.0
-    #     with:
-    #       host: ${{ env.SSH_HOST }}
-    #       port: ${{ env.SSH_PORT }}
-    #       username: ${{ env.SSH_USERNAME }}
-    #       password: ${{ env.SSH_PASSWORD }}
-    #       script: |
-    #         rm -rf infrastructure-configs
-    #         git clone https://${{secrets.PAT_TOKEN}}@github.com/lkduy2602/infrastructure-configs.git
-    #         cd infrastructure-configs
-    #         cp shared/builds/docker-compose.yml matchkeo-api-user/dev
-    #         cd matchkeo-api-user/dev
-    #         echo -e "\nDOCKER_IMAGE=${{github.repository}}:latest" >> .env
-    #         echo -e "\nSERVICE_NAME=${{github.event.repository.name}}" >> .env
-    #         docker compose up -d
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ env.SSH_HOST }}
+          port: ${{ env.SSH_PORT }}
+          username: ${{ env.SSH_USERNAME }}
+          password: ${{ env.SSH_PASSWORD }}
+          script: |
+            rm -rf infrastructure-configs
+            git clone https://${{secrets.PAT_TOKEN}}@github.com/lkduy2602/truyenthinh_configs.git
+            cd truyenthinh_configs
+            bash build-services.sh ${{ format('{0}:{1}', github.repository, inputs.environment) }}
