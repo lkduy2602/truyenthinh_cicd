@@ -43,3 +43,14 @@ jobs:
       - name: Download Dockerfile
         run: |
           curl -H "Authorization: token ${{secrets.PAT_TOKEN}}" -o Dockerfile https://raw.githubusercontent.com/lkduy2602/truyenthinh_configs/main/backend/Dockerfile
+
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ format('{0}:{1}', github.repository, inputs.environment) }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
